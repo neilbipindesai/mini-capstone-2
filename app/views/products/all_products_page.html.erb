@@ -1,0 +1,10 @@
+<h1>The Sexy Store of Ciggerette Lovers</h1>
+
+<% @products.each do |product| %>
+<h2> Brand: <%= product.name %></h2>
+<h3> Price: $<%= product.price %></h3>
+<%= image_tag("#{product.image}") %>
+<h5> Description: <%= product.description %></h5>
+<br>
+
+<% end %>
