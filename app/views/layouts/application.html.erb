@@ -9,6 +9,16 @@
   </head>
 
   <body>
+  <h1><a href="/products">The Sexy Store of Ciggerette Lovers</a></h1>
+  <p><a href="/products/new">New Brand of Ciggerette</a></p>
+
+  <div class="container">
+    <% flash.each do |name, message| %>
+     <div class="alert alert-<%= name %> alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <%= message %>
+  </div>
+         <% end %>
     <%= yield %>
   </body>
 </html>

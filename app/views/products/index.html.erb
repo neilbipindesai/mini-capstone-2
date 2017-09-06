@@ -1,9 +1,9 @@
-<h1>The Sexy Store of Ciggerette Lovers</h1>
+
 
 <% @products.each do |product| %>
-<h2> Brand: <%= product.name %></h2>
+<h2> Brand: <a href="/products/<%= product.id %>"><%= product.name %> </a></h2>
 <h3> Price: $<%= product.price %></h3>
-<%= image_tag("#{product.image}") %>
+<%=image_tag(product.image) %>
 <h5> Description: <%= product.description %></h5>
 <br>
 

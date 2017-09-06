@@ -1,0 +1,17 @@
+<h1>New Brand of Ciggerette</h1>
+<%= form_tag "/products", method: :post do %>
+  <div> 
+  Brand: <input type="text" name="name">
+  </div>
+  <div>
+  Price: <input type="text" name="price">
+  </div>
+  <div>
+  Image: <input type="text" name="image">
+  </div>
+  <div>
+  Description: <input type="text" name="description">
+  </div>
+  <input type="submit" value="Create New Brand">
+
+  <% end %>
