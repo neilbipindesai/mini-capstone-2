@@ -1,12 +1,16 @@
 <h1>Product Info</h1>
 <h2>Brand: <%= @product.name %></h2>
 <h3>Price: $<%= @product.price %></h3>
-<h4> <%= image_tag(@product.image) %></h4>
-<h5>Description: <%= @product.description %></h4>
+<h4>Tax: $<%= @product.tax %></h4>
+<h5>Total: $<%=@product.total %></h5>
+<h6> <%= image_tag(@product.image) %></h6>
+<h7>Description: <%= @product.description %></h7>
+
+
 
 
 <%= link_to "Edit Brand of Ciggeretes", "/products/#{@product.id}/edit", class: "btn btn-warning" %>
 <%= link_to "Delete Brand of Ciggeretes", "/products/#{@product.id}", method: :delete, class: "btn btn-danger" %>
 
-
+<h8>Supplier: <%= @product.supplier.name %></h8>
 
