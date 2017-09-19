@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get '/' => 'products#index'
   get '/products' => 'products#index'
   get '/products/new' => 'products#new'
   post '/products' => 'products#create'
@@ -14,6 +15,10 @@ Rails.application.routes.draw do
   get "/login" => "sessions#new"
   post "/login" => "sessions#create"
   get "/logout" => "sessions#destroy"
+
+
+  post '/orders' => 'orders#create'
+  get '/orders/:id' => 'orders#show'
 
 
  

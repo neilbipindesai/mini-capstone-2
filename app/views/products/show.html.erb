@@ -6,11 +6,11 @@
 <h6> <%= image_tag(@product.image) %></h6>
 <h7>Description: <%= @product.description %></h7>
 
+<%= form_tag "/orders", method: "post" do %>
+  <input type="hidden" name="form_product_id" value="<%= @product.id %>">
+  Quantity: <input type="text" name="form_quantity">
+  <input type="submit" value="Buy now!">
+     <% end %>
 
-
-
-<%= link_to "Edit Brand of Ciggeretes", "/products/#{@product.id}/edit", class: "btn btn-warning" %>
-<%= link_to "Delete Brand of Ciggeretes", "/products/#{@product.id}", method: :delete, class: "btn btn-danger" %>
-
-<h8>Supplier: <%= @product.supplier.name %></h8>
-
+  <%= link_to "Edit", "/products/#{@product.id}/edit", class: "btn btn-success" %>
+  <%= link_to "Delete", "/products/#{@product.id}", {method: :delete, class: "btn btn-danger" }%>
