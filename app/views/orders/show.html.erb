@@ -1,11 +1,7 @@
-<h1>Order Summary</h1>
-
-<br>
-<p>Cigerrete Brand: <%= @order.product.name %></p>
-<h6> <%= image_tag(@order.product.image) %></h6>
-<p>Email: <%= @order.user.email %></p>
-
-<p>quantity: <%= @order.quantity %></p>
-<p>subtotal: <%= @order.subtotal %></p>
-<p>tax: <%= @order.tax %></p>
-<p>total: <%= @order.total %></p>
+<h1>Order Summary</h1> 
+<h1>order id: 38392<%= @order.id %></h1>
+<h1>user: <%= @order.user.name %></h1> 
+<h1>user: <%= @order.user.email %></h1>
+<h1>Subtotal: <%=  number_to_currency(@order.subtotal)%></h1> 
+<h1>Tax: <%= number_to_currency(@order.tax) %></h1> 
+<h1>Total: <%= number_to_currency(@order.total) %></h1>

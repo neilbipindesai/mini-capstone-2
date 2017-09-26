@@ -1,15 +1,24 @@
 <h1>Product Info</h1>
 <h2>Brand: <%= @product.name %></h2>
-<h3>Price: $<%= @product.price %></h3>
-<h4>Tax: $<%= @product.tax %></h4>
-<h5>Total: $<%=@product.total %></h5>
-<h6> <%= image_tag(@product.image) %></h6>
-<h7>Description: <%= @product.description %></h7>
+<h3>Categories</h3>
+    <ul>
+ 
+   
+    
+    
+    </ul>
+    
 
-<%= form_tag "/orders", method: "post" do %>
+<h4>Price: $<%= @product.price %></h4>
+<h5>Tax: $<%= @product.tax %></h5>
+<h6>Total: $<%=@product.total %></h6>
+<h7> <%= image_tag(@product.image) %></h7>
+<h8>Description: <%= @product.description %></h8>
+
+<%= form_tag "/carted_products", method: :post do %>
   <input type="hidden" name="form_product_id" value="<%= @product.id %>">
   Quantity: <input type="text" name="form_quantity">
-  <input type="submit" value="Buy now!">
+  <input type="submit" value="Add to Cart">
      <% end %>
 
   <%= link_to "Edit", "/products/#{@product.id}/edit", class: "btn btn-success" %>

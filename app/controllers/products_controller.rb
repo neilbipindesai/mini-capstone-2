@@ -12,9 +12,15 @@ class ProductsController < ApplicationController
       
       @products = @products.order(sort_attribute => sort_direction)
     elsif discount_amount
-       @products = Product.where("price < ?", discount_amount)
+      @products = Product.where("price < ?", discount_amount)
     end
+       
+      category_name = params[:category]
+    if category_name
+      category = Category.find_by(name: category_name)
+      @products = category.products
     end
+  end
   
  
 
