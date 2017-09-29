@@ -1,25 +1,58 @@
-<h1>Product Info</h1>
-<h2>Brand: <%= @product.name %></h2>
-<h3>Categories</h3>
-    <ul>
- 
-   
-    
-    
-    </ul>
-    
+<section>
+   <div class="row">    
+     <div class="col-sm-8 col-sm-offset-2">
+       <div class="product_single">
+           <h2><%= @product.name %></h2>
 
-<h4>Price: $<%= @product.price %></h4>
-<h5>Tax: $<%= @product.tax %></h5>
-<h6>Total: $<%=@product.total %></h6>
-<h7> <%= image_tag(@product.image) %></h7>
-<h8>Description: <%= @product.description %></h8>
+           <% if @product.discounted? %>
+             <h4>Discount Item!</h4>
+           <% else %>
+             <h4>Everyday Great Value!</h4>
+           <% end %>
 
-<%= form_tag "/carted_products", method: :post do %>
-  <input type="hidden" name="form_product_id" value="<%= @product.id %>">
-  Quantity: <input type="text" name="form_quantity">
-  <input type="submit" value="Add to Cart">
-     <% end %>
+           <p class="<%= "red-price" if @product.discounted? %>">Price: <%= number_to_currency(@product.price) %></p>
+           <p>Tax: <%= number_to_currency(@product.tax) %></p>
+           <p>Total: <%= number_to_currency(@product.total) %></p>
 
-  <%= link_to "Edit", "/products/#{@product.id}/edit", class: "btn btn-success" %>
-  <%= link_to "Delete", "/products/#{@product.id}", {method: :delete, class: "btn btn-danger" }%>
+           <% @product.images.each do |image| %>
+              <img src="<%= image.url %>" alt="<%= @product.name %>" class="img-responsive">
+           <% end %>
+
+           <% if current_user %>           
+             <%= form_tag "/carted_products", method: :post do %>
+                <div>
+                  Quantity: <input type="text" name="quantity">
+                </div>
+                <div>
+                  <input type="hidden" name="product_id" value="<%= @product.id %>">
+                </div>
+                <input type="submit" value="Add to Cart">
+             <% end %>
+           <% else %>
+             <p>Please <a href="/login">Login</a> to Purchase Items</p>
+           <% end %>
+
+
+           <p>Description: <%= @product.description %></p>
+           
+           <% if current_user && current_user.admin %>
+             <%= link_to "Edit", "/products/#{@product.id}/edit", class: "btn btn-success" %>
+             <%= link_to "Delete", "/products/#{@product.id}", {method: :delete, class: "btn btn-danger" }%>
+           <% end %>
+
+           <h5>Categories</h5>
+           <ul>
+             <% @product.categories.each do |category| %>
+               <li><%= category.name %></li>
+             <% end %>
+           </ul>
+           <h6>Supplier: <a href="/suppliers/<%= @product.supplier.id %>"><%= @product.supplier.name %></a></h6>
+       </div>
+     </div>
+   </div>
+ </section>
+
+
+
+
+

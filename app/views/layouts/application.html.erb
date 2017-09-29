@@ -49,6 +49,12 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
             <ul class="dropdown-menu">
+                <% if current_user && current_user.admin %>
+              <li><%= link_to "Create New Brand of Ciggerette", "/products/new" %></li>
+                <% end %>
+                  <% if current_user && current_user.admin %>
+              <li><%= link_to "Create a New Brand of Cigerettes", "/products" %></li>
+                <% end %>
               <li><a href="/products/?discount=11">Discount Item</a></li>
               <li><a href="/products/?sort=price&dir=asc">Price from Lowest to Highest</a></li>
                <li><a href="/products/?sort=price&dir=desc">Price from Highest to Lowest</a></li>

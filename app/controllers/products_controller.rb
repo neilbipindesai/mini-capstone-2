@@ -1,77 +1,91 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_admin!, only: [:new, :create, :edit, :update, :destroy]
+
   def index
     @products = Product.all
 
     sort_attribute = params[:sort]
-    sort_direction = params[:dir]
+    order_attribute = params[:sort_order]
     discount_amount = params[:discount]
-    random = params[:random]
+    category_attribute = params[:category]
 
-
-    if sort_attribute
-      
-      @products = @products.order(sort_attribute => sort_direction)
-    elsif discount_amount
-      @products = Product.where("price < ?", discount_amount)
-    end
-       
-      category_name = params[:category]
-    if category_name
-      category = Category.find_by(name: category_name)
+    if category_attribute
+      category = Category.find_by(name: category_attribute)
       @products = category.products
     end
-  end
-  
- 
 
+    if discount_amount
+      @products = @products.where("price < ?", discount_amount)
+    end
+
+    if sort_attribute && order_attribute
+      @products = @products.order({sort_attribute => order_attribute})
+    elsif sort_attribute
+      @products = @products.order(sort_attribute)
+    end
+  end
 
   def new
-  
+    @suppliers = Supplier.all
+    @product = Product.new
   end
 
   def create
-    product = Product.new(name: params[:name], price: params[:price], image: params[:image], description: params[:description])
-    product.save
-
-    flash[:success] = "New Brand of Ciggerette Successfully Created"
-    redirect_to "/products/#{product.id}"
-
-
+    @product = Product.new(
+                          name: params[:name],
+                          description: params[:description],
+                          price: params[:price],
+                          supplier_id: params[:supplier_id]
+                          )
+    if @product.save
+      flash[:success] = "Product Created"
+      redirect_to "/products/#{@product.id}"
+    else
+      @suppliers = Supplier.all
+      @errors = @product.errors.full_messages
+      render "new.html.erb"
+    end
   end
 
-  def random
-     product_id = Product.all.sample.id
-     redirect_to "/products/#{product_id}"
-  end
-
-  
   def show
     @product = Product.find_by(id: params[:id])
-
   end
- 
 
   def edit
     @product = Product.find_by(id: params[:id])
-
+    @suppliers = Supplier.all
   end
 
   def update
     product = Product.find_by(id: params[:id])
-    
-    product.assign_attributes(name: params[:name], price: params[:price], image: params[:image], description: params[:description])
-
-    product.save
-    flash[:success] = "Brand of Ciggerette Successfully Updated"
+    product.assign_attributes(
+                              name: params[:name],
+                              description: params[:description],
+                              price: params[:price],
+                              supplier_id: params[:supplier_id]
+                              )
+    if product.save
+    flash[:success] = "Product Updated"
     redirect_to "/products/#{product.id}"
-  end
+    else
+      @suppliers = Supplier.all
+      @errors = @product.error.full_messages
+      render "edit.html.erb"
 
-  def destroy
+    end
+
+    def destroy
     product = Product.find_by(id: params[:id])
     product.destroy
-    flash[:warning] = "Brand of Ciggerette Successfully Destroyed"
-    redirect_to "/products"
-
+    flash[:warning] = "Product Destroyed"
+    redirect_to "/"
   end
 
+  def random
+    product_id = Product.all.sample.id
+    redirect_to "/products/#{product_id}"
+  end
+ end
 end
+
+
